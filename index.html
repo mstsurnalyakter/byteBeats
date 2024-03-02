@@ -106,7 +106,31 @@
     </header>
 
     <!-- main section -->
-    <main class="container mx-auto px-4 lg:px-24"></main>
+    <main class="container mx-auto px-4 lg:px-24">
+        <!-- Let’s Discuss section -->
+        <section class="mt-24 mb-12 w-1/2 mx-auto text-center">
+            <h2 class="mb-6 text-4xl font-black text-[#12132D]">Let’s Discuss</h2>
+            <p class="inter text-[#12192D99]">
+                ByteBeats is a place, where ideas spark and conversations flow! Let's start a journey of exploration, enlightenment, and endless laughter together!
+            </p>
+        </section>
+
+        <!-- all post container -->
+        <section class="grid grid-cols-3 gap-5">
+            <div class="col-span-2 space-y-5" id="all-post-container"></div>
+            <div>
+                <div class="card bg-[#12192D0D] shadow-xl w-full rounded-3xl py-2 lg:p-5">
+                    <div class="grid grid-cols-2 mb-5 items-center">
+                        <h2 class="text-[#12132D] font-bold text-xl pl-3">Title</h2>
+                        <div class="inter flex flex-col lg:flex-row items-center justify-center text-[#12192D99]"><img src="./images/mark.png" class="w-5" alt=""><p>Mark as read(<span id="read-num">0</span>)</p></div>
+                    </div>
+                    <div id="read-info-container">
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
 
     <!-- footer section -->
     <footer></footer>
