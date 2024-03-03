@@ -79,4 +79,51 @@ console.log(readNum);
   findElementById("read-info-container").appendChild(div);
 };
 
+const loadLatestPostData = async () =>{
+   const res = await fetch(
+     `https://openapi.programming-hero.com/api/retro-forum/latest-posts`
+   );
+   const posts = await res.json();
+  displayLatestPostData(posts)
+}
+
+const displayLatestPostData = posts =>{
+  posts.forEach(post =>{
+    console.log(post);
+    const div = document.createElement("div");
+    div.classList = "card bg-base-100 shadow-xl";
+    div.innerHTML = `
+      <figure>
+              <img src="${post.cover_image}" alt="cover_image" /></figure>
+            <div class="card-body">
+              <div class="flex items-center justify-center gap-2">
+                <img src="./images/date.png"  alt="">
+                <p class="text-[#12192D99]">${
+                  post.author.posted_date || "No Publish Date"
+                }</p>
+              </div>
+              <h2 class="text[#12132D] font-extrabold text-lg">${
+                post.title
+              }</h2>
+              <p class="text-[#12192D99]">${post.description}</p>
+              <div class="flex items-center gap-2">
+                <img class="w-9 h-9 object-cover rounded-full" src="${
+                  post.profile_image
+                }" alt="profile_image">
+                <div>
+                  <h2 class="text-[#12132D] font-bold">${post.author.name}</h2>
+                  <p class="text-[#12192D99]">${
+                    post.author.designation || "Unknown"
+                  }</p>
+                </div>
+              </div>
+            </div>
+    `;
+    findElementById("latest-post-container").appendChild(div);
+    // console.log(post);
+  })
+}
+
+loadLatestPostData()
+
 loadAllPostData();
