@@ -44,7 +44,7 @@ findElementById("all-post-container").textContent = ""
 
               <img
                 src="${post.image}"
-                alt="image"
+                alt="image" class="object-cover h-full"
               />
             </figure>
             <div class="card-body lg:col-span-2">
