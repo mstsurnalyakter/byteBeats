@@ -7,7 +7,6 @@ const loadAllPostData = async (searchText) =>{
     const res = await fetch(
       `https://openapi.programming-hero.com/api/retro-forum/posts`
     );
-    // console.log(searchText);
     const data = await res.json();
     let posts = data.posts;
       displayPostData(posts,searchText);
@@ -19,7 +18,9 @@ findElementById("all-post-container").textContent = ""
   if (searchText) {
     posts = searchText;
     if (posts.length === 0) {
-      findElementById("error-container").classList.remove("hidden");
+      setTimeout(() => {
+        findElementById("error-container").classList.remove("hidden");
+      }, 2000);
     }else{
       findElementById("error-container").classList.add("hidden");
     }
@@ -27,12 +28,13 @@ findElementById("all-post-container").textContent = ""
     posts = posts
   }
 
-  console.log(posts);
-    posts.forEach(post => {
-        const div = document.createElement('div');
-        div.classList =
-          "card grid grid-cols-1 lg:grid-cols-3 bg-base-100 shadow-xl";
-                div.innerHTML = `
+
+  setTimeout(() => {
+    posts.forEach((post) => {
+      const div = document.createElement("div");
+      div.classList =
+        "card grid grid-cols-1 lg:grid-cols-3 bg-base-100 shadow-xl";
+      div.innerHTML = `
         <figure class="relative">
         ${
           post.isActive
@@ -68,28 +70,34 @@ findElementById("all-post-container").textContent = ""
               post.posted_time
             } min</span></p>
             </div>
-             <div><img onclick="handleReadInfo('${post.title}','${
-                  post.view_count
-                }')" src="./images/email.png" class="cursor-pointer" alt=""></div>
+             <div><img onclick="handleReadInfo('${post.title.replace(
+               /'/g,
+               "@"
+             )}','${
+        post.view_count
+      }')" src="./images/email.png" class="cursor-pointer" alt=""></div>
         </div>
     </div>
             </div>
         `;
-        findElementById("all-post-container").appendChild(div);
+      findElementById("all-post-container").appendChild(div);
     });
+
+  }, 2000);
+
     toggleLoadingSpinner(false);
+
 }
 
 const handleReadInfo = async (title, viewCount) => {
 let readNum = findElementById("read-num").innerText;
 readNum++;
 findElementById("read-num").innerText = readNum;
-console.log(readNum);
   const div = document.createElement('div');
   div.classList =
     "bg-white rounded-2xl flex items-center px-1 gap-2 md:px-5 mb-3";
   div.innerHTML = `
-        <h2 class="text-[#12132D]">${title}</h2>
+        <h2 class="text-[#12132D]">${title.replace(/@/g, "'")}</h2>
         <p class="flex items-center justify-center"><img src="./images/eye.png" alt="">${viewCount}</p>
   `;
   findElementById("read-info-container").appendChild(div);
@@ -158,13 +166,12 @@ const toggleLoadingSpinner = (isLoading) => {
   if (isLoading) {
     loaderContainer.classList.remove("hidden");
   } else {
-
-     setTimeout(()=> {
+    setTimeout(() => {
        loaderContainer.classList.add("hidden");
      }, 2000);
-
   }
 };
+
 
 loadLatestPostData()
 
