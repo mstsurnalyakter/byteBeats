@@ -53,7 +53,7 @@ const displayPostData = posts =>{
             </div>
              <div><img onclick="handleReadInfo('${post.title}','${
                   post.view_count
-                }')" src="./images/email.png" alt=""></div>
+                }')" src="./images/email.png" class="cursor-pointer" alt=""></div>
         </div>
     </div>
             </div>
@@ -70,7 +70,8 @@ readNum++;
 findElementById("read-num").innerText = readNum;
 console.log(readNum);
   const div = document.createElement('div');
-  div.classList = "bg-white rounded-2xl flex items-center px-1 gap-2 md:px-5 mb-3";
+  div.classList =
+    "bg-white rounded-2xl flex items-center px-1 gap-2 md:px-5 mb-3";
   div.innerHTML = `
         <h2 class="text-[#12132D]">${title}</h2>
         <p class="flex items-center justify-center"><img src="./images/eye.png" alt="">${viewCount}</p>
