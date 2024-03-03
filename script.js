@@ -2,16 +2,26 @@ const findElementById = id =>{
     return document.getElementById(id);
 }
 
-const loadAllPostData = async () =>{
+const loadAllPostData = async (searchText) =>{
     const res = await fetch(
       `https://openapi.programming-hero.com/api/retro-forum/posts`
     );
+    // console.log(searchText);
     const data = await res.json();
-    const posts = data.posts;
-    displayPostData(posts)
+    let posts = data.posts;
+      displayPostData(posts,searchText);
+
 }
 
-const displayPostData = posts =>{
+const displayPostData = (posts,searchText) =>{
+findElementById("all-post-container").textContent = ""
+  if (searchText) {
+    posts = searchText
+  }else{
+    posts = posts
+  }
+
+  console.log(posts);
     posts.forEach(post => {
         const div = document.createElement('div');
         div.classList =
@@ -39,6 +49,7 @@ const displayPostData = posts =>{
             <h2 class="text-[#12132D] mb-4 text-xl font-bold">${post.title}</h2>
             <p class="inter text-[#12192D99]">${post.description}</p>
         </div>
+        <div class="border-t-2 mb-5 border-[#12192D40] border-dashed"></div>
         <div class="flex justify-between items-center">
             <div class="flex gap-10 items-center">
             <p class="flex items-center justify-center gap-2"><img src="./images/message.png" alt=""><span>${
@@ -89,7 +100,6 @@ const loadLatestPostData = async () =>{
 
 const displayLatestPostData = posts =>{
   posts.forEach(post =>{
-    console.log(post);
     const div = document.createElement("div");
     div.classList = "card bg-base-100 shadow-xl";
     div.innerHTML = `
@@ -120,8 +130,20 @@ const displayLatestPostData = posts =>{
             </div>
     `;
     findElementById("latest-post-container").appendChild(div);
-    // console.log(post);
   })
+}
+
+const handleSearch = async () =>{
+  const searchText = findElementById("search-field").value;
+
+ const res = await fetch(
+   `https://openapi.programming-hero.com/api/retro-forum/posts?category=${searchText}`
+ );
+
+  const data = await res.json();
+  let posts = data.posts;
+
+  loadAllPostData(posts);
 }
 
 loadLatestPostData()
