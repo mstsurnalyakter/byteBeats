@@ -104,6 +104,7 @@ findElementById("read-num").innerText = readNum;
 };
 
 const loadLatestPostData = async () =>{
+   toggleLoadingSpinner2(true);
    const res = await fetch(
      `https://openapi.programming-hero.com/api/retro-forum/latest-posts`
    );
@@ -112,7 +113,8 @@ const loadLatestPostData = async () =>{
 }
 
 const displayLatestPostData = posts =>{
-  posts.forEach(post =>{
+setTimeout(() => {
+  posts.forEach((post) => {
     const div = document.createElement("div");
     div.classList = "card bg-base-100 shadow-xl";
     div.innerHTML = `
@@ -143,7 +145,10 @@ const displayLatestPostData = posts =>{
             </div>
     `;
     findElementById("latest-post-container").appendChild(div);
-  })
+  });
+}, 2000);
+toggleLoadingSpinner2(false);
+
 }
 
 const handleSearch = async () =>{
@@ -171,6 +176,18 @@ const toggleLoadingSpinner = (isLoading) => {
      }, 2000);
   }
 };
+
+const toggleLoadingSpinner2 = (isLoading) => {
+  const loaderContainer = document.getElementById("loader-container2");
+  if (isLoading) {
+    loaderContainer.classList.remove("hidden");
+  } else {
+    setTimeout(() => {
+      loaderContainer.classList.add("hidden");
+    }, 2000);
+  }
+};
+
 
 
 loadLatestPostData()
