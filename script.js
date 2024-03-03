@@ -3,6 +3,7 @@ const findElementById = id =>{
 }
 
 const loadAllPostData = async (searchText) =>{
+  toggleLoadingSpinner(true);
     const res = await fetch(
       `https://openapi.programming-hero.com/api/retro-forum/posts`
     );
@@ -75,9 +76,8 @@ findElementById("all-post-container").textContent = ""
             </div>
         `;
         findElementById("all-post-container").appendChild(div);
-
-
     });
+    toggleLoadingSpinner(false);
 }
 
 const handleReadInfo = async (title, viewCount) => {
@@ -139,6 +139,7 @@ const displayLatestPostData = posts =>{
 }
 
 const handleSearch = async () =>{
+ toggleLoadingSpinner(true);
   const searchText = findElementById("search-field").value;
 
  const res = await fetch(
@@ -150,6 +151,20 @@ const handleSearch = async () =>{
 
   loadAllPostData(posts);
 }
+
+
+const toggleLoadingSpinner = (isLoading) => {
+  const loaderContainer = document.getElementById("loader-container");
+  if (isLoading) {
+    loaderContainer.classList.remove("hidden");
+  } else {
+
+     setTimeout(()=> {
+       loaderContainer.classList.add("hidden");
+     }, 2000);
+
+  }
+};
 
 loadLatestPostData()
 
