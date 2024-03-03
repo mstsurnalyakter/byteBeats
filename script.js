@@ -16,7 +16,12 @@ const loadAllPostData = async (searchText) =>{
 const displayPostData = (posts,searchText) =>{
 findElementById("all-post-container").textContent = ""
   if (searchText) {
-    posts = searchText
+    posts = searchText;
+    if (posts.length === 0) {
+      findElementById("error-container").classList.remove("hidden");
+    }else{
+      findElementById("error-container").classList.add("hidden");
+    }
   }else{
     posts = posts
   }
